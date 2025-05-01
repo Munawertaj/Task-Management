@@ -5,6 +5,10 @@ import com.bs23.taskmanagement.model.Role;
 import com.bs23.taskmanagement.model.User;
 import com.bs23.taskmanagement.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -62,5 +66,10 @@ public class UserService {
 
         return userRepository.findByUsername(authentication.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + authentication.getName()));
+    }
+
+    public Page<User> getAllUsersPageable(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("username").ascending());
+        return userRepository.findByRoleNot(Role.ROLE_ADMIN, pageable);
     }
 }

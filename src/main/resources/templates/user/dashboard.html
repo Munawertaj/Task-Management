@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{layout :: head}"></head>
+<body>
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white">
+                    <h4 class="mb-0">User Dashboard</h4>
+                </div>
+                <div class="card-body">
+                    <h3>Welcome, <span sec:authentication="name">User</span>!</h3>
+                    <p class="lead">Manage your tasks and stay organized.</p>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">My Tasks</h5>
+                                    <p class="card-text">View and manage all your tasks.</p>
+                                    <a th:href="@{/user/tasks}" class="btn btn-primary">
+                                        <i class="bi bi-list-check"></i> Tasks List
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Create New Task</h5>
+                                    <p class="card-text">Add a new task to your list.</p>
+                                    <a th:href="@{/user/tasks/new}" class="btn btn-success">
+                                        <i class="bi bi-plus-circle"></i> New Task
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>

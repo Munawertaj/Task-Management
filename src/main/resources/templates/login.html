@@ -9,19 +9,23 @@
         <div class="col-md-6">
             <div class="card shadow">
                 <div class="card-header bg-dark text-white">
-                    <h4 class="mb-0">Register</h4>
+                    <h4 class="mb-0">Login</h4>
                 </div>
                 <div class="card-body">
-                    <form th:action="@{/register}" method="post" th:object="${registrationRequest}">
-                        <!-- Display validation errors if any -->
-                        <div class="alert alert-danger" th:if="${param.error}">
-                            <p>Registration failed. Please check your information and try again.</p>
+                    <form th:action="@{/login}" method="post" th:object="${loginRequest}">
+                        <!-- Display error message if login failed -->
+                        <div class="alert alert-danger" th:if="${param.error} or ${error != null}">
+                            <p th:text="${error != null ? error : 'Invalid username or password.'}">Invalid username or password.</p>
                         </div>
 
-                        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
-                            <ul>
-                                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
-                            </ul>
+                        <!-- Display logout message if user just logged out -->
+                        <div class="alert alert-success" th:if="${param.logout}">
+                            <p>You have been logged out successfully.</p>
+                        </div>
+
+                        <!-- Display registration success message -->
+                        <div class="alert alert-success" th:if="${param.registered}">
+                            <p>Registration successful! Please login with your credentials.</p>
                         </div>
 
                         <!-- Username field -->
@@ -36,17 +40,6 @@
                             <div class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
                         </div>
 
-                        <!-- Email field -->
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email"
-                                   class="form-control"
-                                   id="email"
-                                   th:field="*{email}"
-                                   required>
-                            <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-                        </div>
-
                         <!-- Password field -->
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
@@ -58,25 +51,14 @@
                             <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                         </div>
 
-                        <!-- Confirm Password field -->
-                        <div class="mb-3">
-                            <label for="confirmPassword" class="form-label">Confirm Password</label>
-                            <input type="password"
-                                   class="form-control"
-                                   id="confirmPassword"
-                                   th:field="*{confirmPassword}"
-                                   required>
-                            <div class="text-danger" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
-                        </div>
-
                         <!-- Submit button -->
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary">Register</button>
+                            <button type="submit" class="btn btn-primary">Login</button>
                         </div>
                     </form>
                 </div>
                 <div class="card-footer text-center">
-                    <p class="mb-0">Already have an account? <a th:href="@{/login}">Login here</a></p>
+                    <p class="mb-0">Don't have an account? <a th:href="@{/register}">Register here</a></p>
                 </div>
             </div>
         </div>
@@ -84,6 +66,5 @@
 </div>
 
 <footer th:replace="~{layout :: footer}"></footer>
-
 </body>
 </html>

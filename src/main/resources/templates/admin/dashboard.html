@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{layout :: head}"></head>
+<body>
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white">
+                    <h4 class="mb-0">Admin Dashboard</h4>
+                </div>
+                <div class="card-body">
+                    <h3>Welcome, <span sec:authentication="name">Admin</span>!</h3>
+                    <p class="lead">This is your administrative control panel.</p>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">User Management</h5>
+                                    <p class="card-text">View and manage all users in the system.</p>
+                                    <a th:href="@{/admin/users}" class="btn btn-primary">
+                                        <i class="bi bi-people"></i> Users List
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>

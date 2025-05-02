@@ -32,8 +32,8 @@ public class TaskController {
             @RequestParam(defaultValue = "9") int size,
             @RequestParam(required = false) TaskStatus status,
             @RequestParam(required = false) String search,
-            @RequestParam(defaultValue = "deadline") String sortField,
-            @RequestParam(defaultValue = "asc") String sortDirection,
+            @RequestParam(defaultValue = "status") String sortField,
+            @RequestParam(defaultValue = "desc") String sortDirection,
             Model model) {
 
         Page<Task> taskPage = taskService.getCurrentUserTasks(page, size, sortField, sortDirection, status, search);

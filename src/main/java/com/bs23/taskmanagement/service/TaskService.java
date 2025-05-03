@@ -5,12 +5,14 @@ import com.bs23.taskmanagement.model.Task;
 import com.bs23.taskmanagement.model.TaskStatus;
 import com.bs23.taskmanagement.model.User;
 import com.bs23.taskmanagement.repository.TaskRepository;
+import com.bs23.taskmanagement.util.TaskSpecification;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -94,20 +96,14 @@ public class TaskService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Task> getCurrentUserTasks(int page, int size, String sortField, String sortDirection, TaskStatus status, String search) {
+    public Page<Task> getCurrentUserTasks(int page, int size, String sortField, String sortDirection,
+                                          TaskStatus status, String search) {
         User currentUser = userService.getCurrentUser();
-
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortField);
         Pageable pageable = PageRequest.of(page, size, sort);
 
-        if (status != null && search != null && !search.trim().isEmpty()) {
-            return taskRepository.findByUserAndStatusAndTitleContaining(currentUser, status, search, pageable);
-        } else if (status != null) {
-            return taskRepository.findByUserAndStatus(currentUser, status, pageable);
-        } else if (search != null && !search.trim().isEmpty()) {
-            return taskRepository.findByUserAndTitleContaining(currentUser, search, pageable);
-        } else {
-            return taskRepository.findByUser(currentUser, pageable);
-        }
+        // Using criteria query with specification
+        Specification<Task> specification = TaskSpecification.filterTasks(currentUser, status, search);
+        return taskRepository.findAll(specification, pageable);
     }
 }

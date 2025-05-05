@@ -24,4 +24,10 @@ public class UserController {
         model.addAttribute("currentUser", userService.getCurrentUser());
         return "user/dashboard";
     }
+
+    @GetMapping("/profile")
+    public String userDetails(Model model) {
+        model.addAttribute("currentUser", userService.getCurrentUser());
+        return "user/profile";
+    }
 }

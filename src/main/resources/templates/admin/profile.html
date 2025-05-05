@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{layout :: head}"></head>
+<body>
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Details</h4>
+                    <a th:href="@{/admin/dashboard}" class="btn btn-outline-light btn-sm">
+                        <i class="bi bi-arrow-left"></i> Back to Dashboard
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <h3 class="card-title mb-3">Profile Information</h3>
+                        <div class="card mb-3">
+                            <div class="card-body bg-light">
+                                <div class="row mb-3">
+                                    <div class="col-md-4 fw-bold">Username:</div>
+                                    <div class="col-md-8" th:text="${currentUser.username}"></div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4 fw-bold">Email:</div>
+                                    <div class="col-md-8" th:text="${currentUser.email}"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 fw-bold">Member Since:</div>
+                                    <div class="col-md-8" th:text="${#temporals.format(currentUser.createdAt, 'dd MMM yyyy')}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>

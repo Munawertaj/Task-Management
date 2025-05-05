@@ -92,11 +92,17 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
                         <!-- Show profile link only for regular users -->
                         <li sec:authorize="hasRole('USER')">
+                            <a class="dropdown-item" th:href="@{/user/profile}">Profile</a>
+                        </li>
+                        <li sec:authorize="hasRole('USER')">
                             <a class="dropdown-item" th:href="@{/user/tasks/new}">Add Task</a>
                         </li>
                         <li sec:authorize="hasRole('USER')"><hr class="dropdown-divider"></li>
 
                         <!-- Admin-specific menu options could go here -->
+                        <li sec:authorize="hasRole('ADMIN')">
+                            <a class="dropdown-item" th:href="@{/admin/profile}">Profile</a>
+                        </li>
                         <li sec:authorize="hasRole('ADMIN')">
                             <a class="dropdown-item" th:href="@{/admin/users}">All Users</a>
                         </li>

@@ -31,6 +31,12 @@ public class AdminController {
         return "admin/dashboard";
     }
 
+    @GetMapping("/profile")
+    public String userDetails(Model model) {
+        model.addAttribute("currentUser", userService.getCurrentUser());
+        return "admin/profile";
+    }
+
     @GetMapping("/users")
     public String getAllUsers(
             @RequestParam(defaultValue = "0") int page,

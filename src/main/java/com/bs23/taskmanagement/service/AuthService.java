@@ -24,13 +24,8 @@ public class AuthService {
         this.jwtService = jwtService;
     }
 
-    public boolean register(RegistrationRequest registrationRequest) {
-        try {
-            userService.registerUser(registrationRequest);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    public void register(RegistrationRequest registrationRequest) throws IllegalArgumentException {
+        userService.registerUser(registrationRequest);
     }
 
     public boolean login(LoginRequest loginRequest, HttpServletResponse response) {

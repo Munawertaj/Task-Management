@@ -32,17 +32,19 @@ public class AuthController {
 
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute("registrationRequest") RegistrationRequest registrationRequest,
-                           BindingResult result) {
+                           BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "register";
         }
 
-        boolean successful = authService.register(registrationRequest);
-        if (!successful) {
-            return "redirect:/register?error";
+        try {
+            authService.register(registrationRequest);
+            return "redirect:/login?registered";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            model.addAttribute("registrationRequest", registrationRequest);
+            return "register";
         }
-
-        return "redirect:/login?registered";
     }
 
     @GetMapping("/login")

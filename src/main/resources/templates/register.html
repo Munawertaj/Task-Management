@@ -13,11 +13,11 @@
                 </div>
                 <div class="card-body">
                     <form th:action="@{/register}" method="post" th:object="${registrationRequest}">
-                        <!-- Display validation errors if any -->
-                        <div class="alert alert-danger" th:if="${param.error}">
-                            <p>Registration failed. Please check your information and try again.</p>
+                        <!-- Display specific error message if exists -->
+                        <div class="alert alert-danger" th:if="${errorMessage}" th:text="${errorMessage}">
                         </div>
 
+                        <!-- Display validation errors if any -->
                         <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
                             <ul>
                                 <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>

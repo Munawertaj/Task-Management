@@ -15,13 +15,4 @@ public class JwtCookieUtil {
         jwtCookie.setMaxAge(EXPIRATION);
         response.addCookie(jwtCookie);
     }
-
-    public static void clearJwtCookie(HttpServletResponse response) {
-        Cookie jwtCookie = new Cookie("JWT_TOKEN", null);
-        jwtCookie.setHttpOnly(true);
-        jwtCookie.setSecure(true);
-        jwtCookie.setPath("/");
-        jwtCookie.setMaxAge(0); // Deletes the cookie
-        response.addCookie(jwtCookie);
-    }
 }

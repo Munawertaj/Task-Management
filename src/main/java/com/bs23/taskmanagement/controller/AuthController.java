@@ -92,10 +92,4 @@ public class AuthController {
     public String onLoginSuccess(Authentication auth) {
         return dashboardRedirect(auth);
     }
-
-    @GetMapping("/logout")
-    public String logout(HttpServletResponse response) {
-        authService.logout(response);
-        return "redirect:/login?logout";
-    }
 }

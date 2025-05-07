@@ -46,8 +46,4 @@ public class AuthService {
             return false;
         }
     }
-
-    public void logout(HttpServletResponse response) {
-        JwtCookieUtil.clearJwtCookie(response);
-    }
 }
